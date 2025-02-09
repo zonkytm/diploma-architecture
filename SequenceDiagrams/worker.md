@@ -30,7 +30,7 @@ sequenceDiagram
     opt Если ресурсы недоступны
         Worker->>ResourceService: Сообщение о недоступности ресурсов
         ResourceService->>TaskService: Обновление статуса задачи на "Отложено"
-        TaskService->>TaskService: Сохранение статуса "Отложено" в своей БД
+        TaskService->>TaskService: Сохранение статуса "Отложено"
         TaskService-->>Worker: Отправка подтверждения обновления статуса
         TaskService->>ReportService: Предложение другой задачи
         ReportService->>Worker: Отображение новой задачи
@@ -38,13 +38,13 @@ sequenceDiagram
     end
 
     Worker->>TaskService: Начало выполнения работ
-    TaskService->>TaskService: Обновление статуса на "В работе" в своей БД
+    TaskService->>TaskService: Обновление статуса на "В работе"
     TaskService-->>Worker: Уведомление о переходе в статус "В работе"
 
     %% Завершение задачи и создание отчета
     Worker->>TaskService: Завершение работы над задачей
     TaskService->>ReportService: Передача данных для создания отчета
-    ReportService->>ReportService: Сохранение данных в своей БД
+    ReportService->>ReportService: Сохранение данных
     ReportService-->>Worker: Отображение формы создания отчета
     Worker->>ReportService: Заполнение формы отчета
     note over Worker: Форма содержит:
@@ -55,6 +55,6 @@ sequenceDiagram
 
     %% Сохранение результатов
     ReportService->>TaskService: Обновление статуса задачи на "Завершено"
-    TaskService->>TaskService: Сохранение статуса "Завершено" в своей БД
+    TaskService->>TaskService: Сохранение статуса "Завершено"
     TaskService-->>Worker: Отправка подтверждения завершения
 ```

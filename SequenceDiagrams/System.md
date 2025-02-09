@@ -1,12 +1,13 @@
+# Взаимодействие модулей при обработке данных
 ```mermaid
 sequenceDiagram
-    participant Sensor as Датчик (LSM6DS3)
-    participant Module as Модуль связи (STM32F410RBT6)
-    participant InfoBlock as Информационный блок (MATLAB)
+    participant Sensor as Датчик
+    participant Module as Модуль связи
+    participant InfoBlock as Информационный блок
     participant DB as База данных
     
-    Sensor->>Module: Отправка сырого сигнала вибрации (I2C)
-    Module->>Module: Фильтрация сигнала (ограничение диапазона ±2g, ±4g, ±8g, ±16g)
+    Sensor->>Module: Отправка сырого сигнала вибрации
+    Module->>Module: Фильтрация сигнала
     Module->>InfoBlock: Передача отфильтрованных данных через USB
     InfoBlock->>InfoBlock: Нормализация данных (умножение на коэффициенты чувствительности)
     
@@ -17,7 +18,7 @@ sequenceDiagram
     end
     
     InfoBlock->>InfoBlock: Спектральный анализ:
-    InfoBlock->>InfoBlock: Применение быстрого преобразования Фурье (FFT)
+    InfoBlock->>InfoBlock: Применение быстрого преобразования Фурье
     InfoBlock->>InfoBlock: Выделение диагностических параметров:
     InfoBlock->>InfoBlock: - Среднеинтегральная оценка уровня ординат
     InfoBlock->>InfoBlock: - Дисперсионный показатель
