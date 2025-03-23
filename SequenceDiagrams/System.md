@@ -2,13 +2,16 @@
 ```mermaid
 sequenceDiagram
     participant Sensor as Датчик
+    participant PLC as ПЛК
     participant Module as Модуль связи
     participant InfoBlock as Информационный блок
-    participant DB as База данных
+    participant DB as База данных - Модуль хранения данных
     
-    Sensor->>Module: Отправка сырого сигнала вибрации
-    Module->>Module: Фильтрация сигнала
-    Module->>InfoBlock: Передача отфильтрованных данных через USB
+    Sensor->>PLC: Передача сырого сигнала вибрации
+    PLC->>PLC: Предварительная фильтрация сигнала
+    PLC->>Module: Отправка отфильтрованных данных
+    Module->>Module: Преобразование данных в подходящий формат
+    Module->>InfoBlock: Передача данных через USB/Ethernet
     InfoBlock->>InfoBlock: Нормализация данных (умножение на коэффициенты чувствительности)
     
     InfoBlock->>InfoBlock: Статистический анализ:
